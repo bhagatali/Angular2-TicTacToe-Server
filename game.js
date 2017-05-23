@@ -34,6 +34,10 @@ class SiliconOverlord {
       }
     }
 
+    if (emptySpots.length === 0) {
+      return;
+    }
+
     const moveIndex = Math.floor(Math.random() * emptySpots.length);
     const [row, column] = emptySpots[moveIndex];
     board.placeMark(row, column, this.index);
@@ -102,6 +106,12 @@ class Board {
     return true;
   }
 
+  get isFull() {
+    let s = this[boardStateSymbol];
+    let flattened = [...s[0], ...s[1], ...s[2]];
+    return flattened.every(s => s !== null);
+  }
+
   get winner() {
     let s = this[boardStateSymbol];
     let triplets = this[tripletsSymbol];
@@ -146,11 +156,17 @@ class Game {
     return this[gameBoardSymbol].winner;
   }
 
+  get isFull() {
+    if (this[gameBoardSymbol].isFull) {
+      return -1;
+    }
+  }
+
   asObject() {
     return {
       humanIndex: this.humanMovesFirst ? 0 : 1,
       board: this.board,
-      winner: this.winner
+      winner: this.winner || this.isFull
     };
   }
 }
