@@ -8,8 +8,17 @@ let globalGameId = 1;
 
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PATCH, DELETE");
+  next();
+});
+
 app.get('/games', function (req, res) {
-  res.json(games.map(tuple => tuple.game.asObject()));
+  res.json(games.map(tuple => {
+    return Object.assign({}, tuple.game.asObject(), { id: tuple.id });
+  }));
 });
 
 app.post('/games', function (req, res) {
