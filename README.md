@@ -12,6 +12,17 @@
 the collection and returns the list of
 games.
 
+To create the game, you have to specify which
+player moves first. This is the payload you
+have to send.
+
+```json
+{
+  "humanMovesFirst": true | false
+}
+```
+
+
 **GET** `/games/:id` returns the game
 for that given identifier.
 
