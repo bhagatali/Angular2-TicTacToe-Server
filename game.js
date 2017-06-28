@@ -166,7 +166,7 @@ class Game {
     return {
       humanIndex: this.humanMovesFirst ? 0 : 1,
       board: this.board,
-      winner: this.winner || this.isFull
+      winner: Number.isInteger(this.winner) ? this.winner : this.isFull
     };
   }
 }
